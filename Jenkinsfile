@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('Archive') {
         when {
-            branch 'main-staging'
+            branch 'main'
         }
         steps {
             sh 'docker build -t react1 .'
@@ -22,7 +22,7 @@ pipeline {
         }
 
         when {
-            branch 'main-staging'
+            branch 'main'
         }
 
         agent {
