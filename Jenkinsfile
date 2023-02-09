@@ -33,14 +33,15 @@ pipeline {
     }
 
     stage('Deploy') {
-      steps {
-        withCredentials([sshUserPrivateKey(credentialsId: 'StrapiDev-Key', keyFileVariable: 'KEYFILE')]) {
-          sh 'aws ssm get-parameters --names /app/env_vars --with-decryption --region us-west-2 | jq -r ".Parameters[] | .Value" > env_vars'
-          sh 'scp -i my-key.pem env_vars ubuntu@my-instance:/tmp'
-          sh 'ssh -i my-key.pem ubuntu@my-instance "docker load -i /tmp/myapp_$BUILD_NUMBER.tar.gz"'
-          sh 'ssh -i my-key.pem ubuntu@my-instance "docker stop myapp || true"'
-          sh 'ssh -i my-key.pem ubuntu@my-instance "docker rm myapp || true"'
-          sh 'ssh -i my-key.pem ubuntu@my-instance "docker run -d --name myapp -e env_file=./env_vars -p 80:80 myapp:$BUILD_NUMBER"'
+        agent any
+
+        when {
+            branch 'main'
+        }
+
+        steps {
+            withCredentials([sshUserPrivateKey(credentialsId: 'StrapiDev-Key', keyFileVariable: 'KEYFILE')]) {
+            sh '""ssh -tt -i $KEYFILE ubuntu@18.196.109.172 && rm -rf react1 && mkdir react1 && cd react1 && aws s3 sync s3://jenkins-pipeline-artifacts-gdm/react1-artifacts . && tar -xf react1.tar.gz && rm -rf react1.tar.gz" ""'
         }
       }
     }
