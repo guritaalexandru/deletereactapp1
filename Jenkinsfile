@@ -41,7 +41,7 @@ pipeline {
 
         steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'StrapiDev-Key', keyFileVariable: 'KEYFILE')]) {
-            sh '""ssh -tt -i $KEYFILE ubuntu@18.196.109.172 "rm -rf react1 && mkdir react1 && cd react1 && aws s3 sync s3://jenkins-pipeline-artifacts-gdm/react1-artifacts . && docker image load -i react1.tar.gz && docker rm react1 && docker run -p 3000:3000 react1" ""'
+            sh '""ssh -tt -i $KEYFILE ubuntu@18.196.109.172 "rm -rf react1 && mkdir react1 && cd react1 && aws s3 sync s3://jenkins-pipeline-artifacts-gdm/react1-artifacts . && docker image load -i react1.tar.gz && docker rm react1 || true && docker run --name react1 -p 3000:3000 react1" ""'
         }
       }
     }
