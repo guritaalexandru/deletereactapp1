@@ -1,9 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'docker:19.03.12'
-    }
-  }
+  agent any
   stages {
     stage('Archive') {
         when {
