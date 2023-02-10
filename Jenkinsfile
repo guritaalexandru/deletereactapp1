@@ -49,7 +49,7 @@ pipeline {
 
         steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'StrapiDev-Key', keyFileVariable: 'KEYFILE')]) {
-            sh '""ssh -tt -i $KEYFILE ubuntu@3.73.44.106 \
+            sh '""ssh -tt -i $KEYFILE ubuntu@3.64.139.151 \
                 "rm -rf react1 && \
                 mkdir react1 && \
                 cd react1 && \
