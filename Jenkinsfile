@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Archive') {
+    stage('Build & Archive') {
         when {
             branch 'main'
         }
@@ -57,7 +57,7 @@ pipeline {
                 docker rm -f react1 || true && \
                 docker image rm -f react1 || true && \
                 docker image load -i react1.tar.gz && \
-                docker run -d --name react1 -p 3000:3000 react1" ""'
+                docker run -d --name react1 --restart always -p 3000:3000 react1" ""'
         }
       }
     }
