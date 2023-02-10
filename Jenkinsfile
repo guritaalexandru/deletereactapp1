@@ -6,8 +6,14 @@ pipeline {
             branch 'main'
         }
         steps {
-            withCredentials([string(credentialsId: 'NextTestVar', variable: 'TestVar')]){
-                sh 'docker build --build-arg NEXT_PUBLIC_TEST_VAR=$TestVar -t react1 .'
+            withCredentials([
+                string(credentialsId: 'NextTestVar', variable: 'TestVar'),
+                string(credentialsId: 'NextTestVar2', variable: 'TestVar2')
+            ]){
+                sh 'docker build
+                    --build-arg NEXT_PUBLIC_TEST_VAR=$TestVar
+                    --build-arg NEXT_PUBLIC_TEST_VAR2=$TestVar2
+                    -t react1 .'
                 sh 'docker save react1 | gzip > react1.tar.gz'
                 stash includes: 'react1.tar.gz', name: 'react1.tar.gz'
             }

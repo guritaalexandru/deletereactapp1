@@ -9,6 +9,8 @@ export default function Home() {
   // log an env var
   console.log('here')
   console.log(process.env.NEXT_PUBLIC_TEST_VAR)
+  console.log('here2')
+  console.log(process.env.NEXT_PUBLIC_TEST_VAR2)
   return (
     <>
       <Head>
