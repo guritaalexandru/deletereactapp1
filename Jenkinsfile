@@ -49,7 +49,7 @@ pipeline {
 
         steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'StrapiDev-Key', keyFileVariable: 'KEYFILE')]) {
-            sh '""ssh -o StrictHostKeyChecking=no -tt -i $KEYFILE ubuntu@3.64.139.151 \
+            sh '""ssh -o StrictHostKeyChecking=no -tt -i $KEYFILE ubuntu@3.74.242.104 \
                 "rm -rf react1 && \
                 mkdir react1 && \
                 cd react1 && \
