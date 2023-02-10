@@ -7,12 +7,10 @@ pipeline {
         }
         steps {
             withCredentials([
-                string(credentialsId: 'NextTestVar', variable: 'TestVar'),
-                string(credentialsId: 'NextTestVar2', variable: 'TestVar2')
+              file(credentialsId: 'NextDev-Env', variable: 'VARFILE')
             ]){
+                sh 'cp $VARFILE .env'
                 sh 'docker build \
-                    --build-arg NEXT_PUBLIC_TEST_VAR=$TestVar \
-                    --build-arg NEXT_PUBLIC_TEST_VAR2=$TestVar2 \
                     -t react1 .'
                 sh 'docker save react1 | gzip > react1.tar.gz'
                 stash includes: 'react1.tar.gz', name: 'react1.tar.gz'
@@ -49,7 +47,7 @@ pipeline {
 
         steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'StrapiDev-Key', keyFileVariable: 'KEYFILE')]) {
-            sh '""ssh -o StrictHostKeyChecking=no -tt -i $KEYFILE ubuntu@3.74.242.104 \
+            sh '""ssh -tt -i $KEYFILE ubuntu@3.74.242.104 \
                 "rm -rf react1 && \
                 mkdir react1 && \
                 cd react1 && \
