@@ -22,7 +22,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.description}>
           <p>
-            2
+            3
             <code className={styles.code}>pages/index.js</code>
           </p>
           <div>

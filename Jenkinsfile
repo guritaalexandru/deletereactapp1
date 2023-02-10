@@ -53,7 +53,11 @@ pipeline {
                 "rm -rf react1 && \
                 mkdir react1 && \
                 cd react1 && \
-                aws s3 sync s3://jenkins-pipeline-artifacts-gdm/react1-artifacts . && docker rm -f react1 || true && docker image rm -f react1 || true  && docker image load -i react1.tar.gz && docker run -d --name react1 -p 3000:3000 react1" ""'
+                aws s3 sync s3://jenkins-pipeline-artifacts-gdm/react1-artifacts . && \
+                docker rm -f react1 || true && \
+                docker image rm -f react1 || true && \
+                docker image load -i react1.tar.gz && \
+                docker run -d --name react1 -p 3000:3000 react1" ""'
         }
       }
     }
