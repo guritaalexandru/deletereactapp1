@@ -18,6 +18,10 @@ RUN \
 
 # Rebuild the source code only when needed
 FROM base AS builder
+
+ARG NEXT_PUBLIC_TEST_VAR
+ENV NEXT_PUBLIC_TEST_VAR=$NEXT_PUBLIC_TEST_VAR
+
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .

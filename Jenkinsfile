@@ -6,9 +6,11 @@ pipeline {
             branch 'main'
         }
         steps {
-            sh 'docker build -t react1 .'
-            sh 'docker save react1 | gzip > react1.tar.gz'
-            stash includes: 'react1.tar.gz', name: 'react1.tar.gz'
+            withCredentials([string(credentialsId: 'NextTestVar', variable: 'TestVar')]){
+                sh 'docker build --build-arg NEXT_PUBLIC_TEST_VAR=$TestVar  -t react1 .'
+                sh 'docker save react1 | gzip > react1.tar.gz'
+                stash includes: 'react1.tar.gz', name: 'react1.tar.gz'
+            }
         }
     }
 
@@ -41,7 +43,7 @@ pipeline {
 
         steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'StrapiDev-Key', keyFileVariable: 'KEYFILE')]) {
-            sh '""ssh -tt -i $KEYFILE ubuntu@18.196.109.172 "rm -rf react1 && mkdir react1 && cd react1 && aws s3 sync s3://jenkins-pipeline-artifacts-gdm/react1-artifacts . && docker rm -f react1 || true && docker image rm -f react1 || true  && docker image load -i react1.tar.gz && docker run -d --name react1 -p 3000:3000 react1" ""'
+            sh '""ssh -tt -i $KEYFILE ubuntu@3.73.44.106 "rm -rf react1 && mkdir react1 && cd react1 && aws s3 sync s3://jenkins-pipeline-artifacts-gdm/react1-artifacts . && docker rm -f react1 || true && docker image rm -f react1 || true  && docker image load -i react1.tar.gz && docker run -d --name react1 -p 3000:3000 react1" ""'
         }
       }
     }
