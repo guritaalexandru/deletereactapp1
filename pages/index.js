@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   // log an env var
-  console.log('here')
+  console.log('here1')
   console.log(process.env.NEXT_PUBLIC_TEST_VAR)
   console.log('here2')
   console.log(process.env.NEXT_PUBLIC_TEST_VAR2)
