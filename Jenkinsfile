@@ -9,7 +9,7 @@ pipeline {
             withCredentials([
               file(credentialsId: 'NextDev-Env', variable: 'VARFILE')
             ]){
-                sh 'cp $VARFILE .env'
+                sh 'cp -f $VARFILE .env'
                 sh 'docker build \
                     -t react1 .'
                 sh 'docker save react1 | gzip > react1.tar.gz'
